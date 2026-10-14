@@ -1,0 +1,133 @@
+<div class="payroll-page">
+
+  <h1>Payroll Information</h1>
+
+  <div class="form-container">
+
+    <h2>
+      {{ isEditMode ? 'Edit Payroll' : 'Add Payroll' }}
+    </h2>
+
+    <form [formGroup]="payrollForm" (ngSubmit)="savePayroll()">
+
+      <div class="form-row">
+
+        <div>
+          <label>Employee ID</label>
+          <input type="number" formControlName="employeeId">
+        </div>
+
+        <div>
+          <label>Basic Salary</label>
+          <input type="number" formControlName="basicSalary">
+        </div>
+
+      </div>
+
+      <div class="form-row">
+
+        <div>
+          <label>HRA</label>
+          <input type="number" formControlName="hra">
+        </div>
+
+        <div>
+          <label>Bonus</label>
+          <input type="number" formControlName="bonus">
+        </div>
+
+      </div>
+
+      <div class="form-row">
+
+        <div>
+          <label>Deduction</label>
+          <input type="number" formControlName="deduction">
+        </div>
+
+        <div>
+          <label>Net Salary</label>
+          <input type="number" formControlName="netSalary">
+        </div>
+
+      </div>
+
+      <button type="submit">
+        {{ isEditMode ? 'Update' : 'Save' }}
+      </button>
+
+      @if (isEditMode) {
+        <button
+          type="button"
+          class="cancel-button"
+          (click)="resetForm()">
+          Cancel
+        </button>
+      }
+
+    </form>
+
+  </div>
+
+  <div class="payroll-list">
+
+    <h2>Payroll Records</h2>
+
+    <table>
+
+      <thead>
+        <tr>
+          <th>Employee ID</th>
+          <th>Basic Salary</th>
+          <th>HRA</th>
+          <th>Bonus</th>
+          <th>Deduction</th>
+          <th>Net Salary</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+
+      <tbody>
+
+        @for (payroll of payrolls(); track payroll.id) {
+
+          <tr>
+
+            <td>{{ payroll.employeeId }}</td>
+            <td>₹ {{ payroll.basicSalary }}</td>
+            <td>₹ {{ payroll.hra }}</td>
+            <td>₹ {{ payroll.bonus }}</td>
+            <td>₹ {{ payroll.deduction }}</td>
+            <td class="net-salary">
+              ₹ {{ payroll.netSalary }}
+            </td>
+
+            <td>
+
+              <button
+                type="button"
+                class="edit-button"
+                (click)="editPayroll(payroll)">
+                Edit
+              </button>
+
+              <button
+                type="button"
+                class="delete-button"
+                (click)="deletePayroll(payroll.id)">
+                Delete
+              </button>
+
+            </td>
+
+          </tr>
+
+        }
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

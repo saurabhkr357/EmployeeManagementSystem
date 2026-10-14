@@ -1,0 +1,108 @@
+<div class="layout">
+
+  <aside class="sidebar">
+
+    <!-- Brand -->
+
+    <div class="brand">
+
+      <div class="brand-logo">
+        EMS
+      </div>
+
+      <div class="brand-text">
+        <h2>Employee</h2>
+        <span>Management System</span>
+      </div>
+
+    </div>
+
+
+    <!-- Navigation -->
+
+    <nav class="navigation">
+
+      <a
+        routerLink="/dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">
+
+        <span class="nav-icon">▦</span>
+        <span>Dashboard</span>
+
+      </a>
+
+          @if (isAdmin()) {
+
+          <a routerLink="/employees" routerLinkActive="active">
+
+            <span class="nav-icon">♙</span>
+            <span>Employees</span>
+
+          </a>
+
+          }
+
+      <a
+        routerLink="/payroll"
+        routerLinkActive="active">
+
+        <span class="nav-icon">₹</span>
+        <span>Payroll</span>
+
+      </a>
+
+      <a
+        routerLink="/attendance"
+        routerLinkActive="active">
+
+        <span class="nav-icon">✓</span>
+        <span>Attendance</span>
+
+      </a>
+
+    </nav>
+
+
+    <!-- Bottom section -->
+
+    <div class="sidebar-footer">
+
+      <button
+        class="logout-button"
+        (click)="logout()">
+
+        <span class="logout-icon">↪</span>
+
+        <span>Logout</span>
+
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- Main Content -->
+
+  <main class="content">
+
+    <div class="content-header">
+
+      <div>
+        <span class="page-label">
+          Employee Management System
+        </span>
+      </div>
+
+    </div>
+
+    <div class="page-content">
+
+      <router-outlet></router-outlet>
+
+    </div>
+
+  </main>
+
+</div>

@@ -1,0 +1,167 @@
+<div class="employee-page">
+
+  <h1>Employee Information</h1>
+
+  <div class="form-container">
+
+    <h2>
+      {{ isEditMode ? 'Edit Employee' : 'Add Employee' }}
+    </h2>
+
+    <form [formGroup]="employeeForm" (ngSubmit)="saveEmployee()">
+
+      <div class="form-row">
+
+        <div>
+          <label>Employee Code</label>
+
+          <input type="text" formControlName="employeeCode">
+
+          @if (employeeForm.get('employeeCode')?.touched &&
+          employeeForm.get('employeeCode')?.invalid) {
+          <small>Employee Code is required.</small>
+          }
+        </div>
+
+        <div>
+          <label>Name</label>
+
+          <input type="text" formControlName="name">
+
+          @if (employeeForm.get('name')?.touched &&
+          employeeForm.get('name')?.invalid) {
+          <small>Name is required.</small>
+          }
+        </div>
+
+      </div>
+
+      <div class="form-row">
+
+        <div>
+          <label>Email</label>
+
+          <input type="email" formControlName="email">
+
+          @if (employeeForm.get('email')?.touched &&
+          employeeForm.get('email')?.invalid) {
+          <small>Enter a valid email.</small>
+          }
+        </div>
+
+        <div>
+          <label>Phone</label>
+
+          <input type="text" formControlName="phone">
+
+          @if (employeeForm.get('phone')?.touched &&
+          employeeForm.get('phone')?.invalid) {
+          <small>Phone is required.</small>
+          }
+        </div>
+
+      </div>
+
+      <div class="form-row">
+
+        <div>
+          <label>Department</label>
+
+          <input type="text" formControlName="department">
+        </div>
+
+        <div>
+          <label>Designation</label>
+
+          <input type="text" formControlName="designation">
+        </div>
+
+      </div>
+
+      <button type="submit">
+        {{ isEditMode ? 'Update' : 'Save' }}
+      </button>
+
+      @if (isEditMode) {
+
+      <button type="button" (click)="resetForm()">
+
+        Cancel
+
+      </button>
+
+      }
+
+    </form>
+
+  </div>
+
+
+  <div class="employee-list">
+
+    <h2>Employees</h2>
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Code</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Department</th>
+          <th>Designation</th>
+          <th>Actions</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        @for (employee of employees(); track employee.id) {
+
+        <tr>
+
+          <td>
+            {{ employee.employeeCode }}
+          </td>
+
+          <td>
+            {{ employee.name }}
+          </td>
+
+          <td>
+            {{ employee.email }}
+          </td>
+
+          <td>
+            {{ employee.department }}
+          </td>
+
+          <td>
+            {{ employee.designation }}
+          </td>
+
+          <td>
+
+            <button type="button" class="edit-button" (click)="editEmployee(employee)">
+              Edit
+            </button>
+
+            <button type="button" class="delete-button" (click)="deleteEmployee(employee.id)">
+              Delete
+            </button>
+
+          </td>
+
+        </tr>
+
+        }
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

@@ -1,0 +1,180 @@
+<div class="attendance-page">
+
+  <h1>Attendance Information</h1>
+
+  <div class="form-container">
+
+    <h2>
+      {{ isEditMode ? 'Edit Attendance' : 'Add Attendance' }}
+    </h2>
+
+    <form
+      [formGroup]="attendanceForm"
+      (ngSubmit)="saveAttendance()">
+
+      <div class="form-row">
+
+        <div>
+          <label>Employee ID</label>
+
+          <input
+            type="number"
+            formControlName="employeeId">
+
+          @if (
+            attendanceForm.get('employeeId')?.touched &&
+            attendanceForm.get('employeeId')?.invalid
+          ) {
+            <small>Enter a valid Employee ID.</small>
+          }
+        </div>
+
+        <div>
+          <label>Attendance Date</label>
+
+          <input
+            type="date"
+            formControlName="attendanceDate">
+
+          @if (
+            attendanceForm.get('attendanceDate')?.touched &&
+            attendanceForm.get('attendanceDate')?.invalid
+          ) {
+            <small>Attendance date is required.</small>
+          }
+        </div>
+
+      </div>
+
+      <div class="form-row">
+
+        <div>
+          <label>Status</label>
+
+          <select formControlName="status">
+
+            <option value="">Select Status</option>
+
+            <option value="Present">
+              Present
+            </option>
+
+            <option value="Absent">
+              Absent
+            </option>
+
+          </select>
+
+          @if (
+            attendanceForm.get('status')?.touched &&
+            attendanceForm.get('status')?.invalid
+          ) {
+            <small>Status is required.</small>
+          }
+
+        </div>
+
+      </div>
+
+      <button type="submit">
+        {{ isEditMode ? 'Update' : 'Save' }}
+      </button>
+
+      @if (isEditMode) {
+
+        <button
+          type="button"
+          class="cancel-button"
+          (click)="resetForm()">
+
+          Cancel
+
+        </button>
+
+      }
+
+    </form>
+
+  </div>
+
+
+  <div class="attendance-list">
+
+    <h2>Attendance Records</h2>
+
+    <table>
+
+      <thead>
+
+        <tr>
+          <th>Employee ID</th>
+          <th>Attendance Date</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+
+      </thead>
+
+      <tbody>
+
+        @for (
+          attendance of attendanceRecords();
+          track attendance.id
+        ) {
+
+          <tr>
+
+            <td>
+              {{ attendance.employeeId }}
+            </td>
+
+            <td>
+              {{ attendance.attendanceDate | date:'dd-MM-yyyy' }}
+            </td>
+
+            <td>
+
+              <span
+                class="status-badge"
+                [class.present]="attendance.status === 'Present'"
+                [class.absent]="attendance.status === 'Absent'">
+
+                {{ attendance.status }}
+
+              </span>
+
+            </td>
+
+            <td>
+
+              <button
+                type="button"
+                class="edit-button"
+                (click)="editAttendance(attendance)">
+
+                Edit
+
+              </button>
+
+              <button
+                type="button"
+                class="delete-button"
+                (click)="deleteAttendance(attendance.id)">
+
+                Delete
+
+              </button>
+
+            </td>
+
+          </tr>
+
+        }
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>
